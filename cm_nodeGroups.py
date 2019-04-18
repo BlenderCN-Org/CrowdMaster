@@ -367,10 +367,10 @@ class GroupIOPanel(Panel):
         group = context.space_data.path[-1].node_tree
 
         row = layout.row()
-        row.label("Inputs:")
+        row.label(text="Inputs:")
         i = row.operator("scene.cm_group_remove_input", text="", icon="X")
         i.groupName = group.name
-        row.label("Output:")
+        row.label(text="Output:")
         o = row.operator("scene.cm_group_remove_output", text="", icon="X")
         o.groupName = group.name
 
@@ -387,7 +387,7 @@ class EmptySocket(NodeSocket):
     bl_label = 'CrowdMaster Empty Node Socket'
 
     def draw(self, context, layout, node, text):
-        layout.label(text)
+        layout.label(text=text)
 
     def draw_color(self, context, node):
         return 1.0, 1.0, 1.0, 0.0

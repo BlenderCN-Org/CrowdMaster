@@ -36,7 +36,7 @@ class Agent:
     """Represents each of the agents in the scene."""
 
     def __init__(self, ag, nodeGroup, sim, freezeAnimation=False):
-        preferences = bpy.context.user_preferences.addons[__package__].preferences
+        preferences = bpy.context.preferences.addons[__package__].preferences
         if preferences.show_debug_options:
             t = time.time()
         self.id = ag.name
@@ -191,7 +191,7 @@ class Agent:
         """Called each frame of the simulation."""
 
         objs = bpy.data.objects
-        preferences = bpy.context.user_preferences.addons[__package__].preferences
+        preferences = bpy.context.preferences.addons[__package__].preferences
 
         rot = objs[self.id].rotation_euler
 
@@ -274,7 +274,7 @@ class Agent:
     def apply(self):
         """Called in single thread after all agent.step() calls are done"""
         obj = bpy.data.objects[self.id]
-        preferences = bpy.context.user_preferences.addons[__package__].preferences
+        preferences = bpy.context.preferences.addons[__package__].preferences
 
         self.access = copy.deepcopy(self.external)
 

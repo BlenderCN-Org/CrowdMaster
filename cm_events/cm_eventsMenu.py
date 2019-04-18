@@ -42,8 +42,8 @@ class event_entry(PropertyGroup):
 
 
 class events_collection(PropertyGroup):
-    coll = CollectionProperty(type=event_entry)
-    index = IntProperty()
+    coll: CollectionProperty(type=event_entry)
+    index: IntProperty()
 
 
 class SCENE_OT_cm_events_populate(Operator):
@@ -76,7 +76,7 @@ class SCENE_OT_event_move(Operator):
     bl_idname = "scene.cm_events_move"
     bl_label = "Move"
 
-    direction = EnumProperty(items=(
+    direction: EnumProperty(items=(
         ('UP', "Up", "Move up"),
         ('DOWN', "Down", "Move down"))
                             )
@@ -124,8 +124,8 @@ class SCENE_PT_event(Panel):
     bl_label = "Events"
     bl_idname = "SCENE_PT_event"
     bl_space_type = 'NODE_EDITOR'
-    bl_region_type = 'TOOLS'
-    bl_category = "CrowdMaster"
+    bl_region_type = 'UI'
+    bl_category = "Simulation"
     bl_options = {'DEFAULT_CLOSED'}
 
     @classmethod
@@ -144,13 +144,13 @@ class SCENE_PT_event(Panel):
                           "coll", sce.cm_events, "index")
 
         col = row.column()
-        sub = col.column(True)
+        sub = col.column(align=True)
         blid_ap = SCENE_OT_cm_events_populate.bl_idname
-        sub.operator(blid_ap, text="", icon="ZOOMIN")
+        sub.operator(blid_ap, text="", icon="ADD")
         blid_ar = SCENE_OT_event_remove.bl_idname
-        sub.operator(blid_ar, text="", icon="ZOOMOUT")
+        sub.operator(blid_ar, text="", icon="REMOVE")
 
-        sub = col.column(True)
+        sub = col.column(align=True)
         sub.separator()
         blid_am = SCENE_OT_event_move.bl_idname
         sub.operator(blid_am, text="", icon="TRIA_UP").direction = 'UP'

@@ -35,7 +35,7 @@ class Simulation:
     """The object that contains everything once the simulation starts"""
 
     def __init__(self):
-        preferences = bpy.context.user_preferences.addons[__package__].preferences
+        preferences = bpy.context.preferences.addons[__package__].preferences
         if preferences.show_debug_options and preferences.show_debug_timings:
             cm_timings.resetTimings()
         self.agents = {}
@@ -108,7 +108,7 @@ class Simulation:
     def newagent(self, agent, brain, freezeAnimation):
         """Set up an agent"""
         nGps = bpy.data.node_groups
-        preferences = bpy.context.user_preferences.addons[__package__].preferences
+        preferences = bpy.context.preferences.addons[__package__].preferences
         if brain in nGps and nGps[brain].bl_idname == "CrowdMasterTreeType":
             ag = Agent(agent, nGps[brain], self,
                        freezeAnimation=freezeAnimation)
@@ -124,7 +124,7 @@ class Simulation:
 
     def step(self, scene):
         """Called when the next frame is moved to"""
-        preferences = bpy.context.user_preferences.addons[__package__].preferences
+        preferences = bpy.context.preferences.addons[__package__].preferences
         if preferences.show_debug_options:
             t = time.time()
             logger.debug("NEWFRAME {}".format(bpy.context.scene.frame_current))
@@ -195,7 +195,7 @@ class Simulation:
 
     def startFrameHandler(self):
         """Add self.frameChangeHandler to the Blender event handlers"""
-        preferences = bpy.context.user_preferences.addons[__package__].preferences
+        preferences = bpy.context.preferences.addons[__package__].preferences
         if preferences.show_debug_options:
             self.totalTime = 0
             self.totalFrames = 0
@@ -216,7 +216,7 @@ class Simulation:
 
     def stopFrameHandler(self):
         """Remove self.frameChangeHandler from Blenders event handlers"""
-        preferences = bpy.context.user_preferences.addons[__package__].preferences
+        preferences = bpy.context.preferences.addons[__package__].preferences
         if self.frameChangeHandler in bpy.app.handlers.frame_change_pre:
             logger.debug("Unregistering frame change handler")
             bpy.app.handlers.frame_change_pre.remove(self.frameChangeHandler)

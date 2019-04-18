@@ -43,7 +43,7 @@ class CMSavePrefs(Operator):
 
 
 def updateLogger(self, context):
-    preferences = context.user_preferences.addons[__package__].preferences
+    preferences = context.preferences.addons[__package__].preferences
     if preferences.show_debug_options:
         logging.basicConfig(level=logging.DEBUG, format='%(message)s')
     else:
@@ -139,7 +139,7 @@ class CMPreferences(AddonPreferences):
 
     def draw(self, context):
         layout = self.layout
-        preferences = context.user_preferences.addons[__package__].preferences
+        preferences = context.preferences.addons[__package__].preferences
 
         row = layout.row()
         row.prop(preferences, "prefs_tab", expand=True)
@@ -155,7 +155,7 @@ class CMPreferences(AddonPreferences):
                 row.prop(preferences, 'play_animation', icon='ACTION')
 
             row = layout.row()
-            row.prop(preferences, 'ask_to_save', icon='SAVE_AS')
+            row.prop(preferences, 'ask_to_save', icon='FILE_NEW')
             row.prop(preferences, 'use_node_color', icon='COLOR')
 
             row = layout.row()
@@ -186,8 +186,7 @@ class CMPreferences(AddonPreferences):
                 row.prop(preferences, 'show_debug_timings', icon='TIME')
             else:
                 row = layout.row()
-                row.label(
-                    "Enable Show Debug Options to access these settings (only for developers).")
+                row.label(text="Enable Show Debug Options to access these settings (only for developers).")
 
                 row = layout.row()
                 if preferences.use_custom_icons:
@@ -213,11 +212,11 @@ class CMPreferences(AddonPreferences):
 
         row = box.row()
         row.scale_y = 1.25
-        row.operator("scene.cm_save_prefs", icon='SAVE_PREFS')
+        row.operator("scene.cm_save_prefs", icon='GREASEPENCIL')
 
 
 def draw_cmweb_item(self, context):
-    preferences = context.user_preferences.addons[__package__].preferences
+    preferences = context.preferences.addons[__package__].preferences
     self.layout.separator()
     if preferences.use_custom_icons:
         self.layout.operator("wm.url_open", text="CrowdMaster Website", icon_value=cicon(
@@ -234,10 +233,10 @@ def draw_cmweb_item(self, context):
 def register():
     bpy.utils.register_class(CMSavePrefs)
     bpy.utils.register_class(CMPreferences)
-    bpy.types.INFO_MT_help.append(draw_cmweb_item)
+    #bpy.types.INFO_MT_help.append(draw_cmweb_item)
 
 
 def unregister():
     bpy.utils.unregister_class(CMSavePrefs)
     bpy.utils.unregister_class(CMPreferences)
-    bpy.types.INFO_MT_help.remove(draw_cmweb_item)
+    #bpy.types.INFO_MT_help.remove(draw_cmweb_item)

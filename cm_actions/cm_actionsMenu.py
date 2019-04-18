@@ -43,15 +43,15 @@ def updateGroups(self, context):
 
 class action_entry(PropertyGroup):
     """The data structure for the action entries"""
-    name = StringProperty(update=updateGroups)
-    action = StringProperty()
-    motion = StringProperty()
-    groups = StringProperty(update=updateGroups)
+    name: StringProperty(update=updateGroups)
+    action: StringProperty()
+    motion: StringProperty()
+    groups: StringProperty(update=updateGroups)
 
 
 class actions_collection(PropertyGroup):
-    coll = CollectionProperty(type=action_entry)
-    index = IntProperty()
+    coll: CollectionProperty(type=action_entry)
+    index: IntProperty()
 
 
 class SCENE_OT_cm_actions_populate(Operator):
@@ -84,7 +84,7 @@ class SCENE_OT_agent_move(Operator):
     bl_idname = "scene.cm_agents_move"
     bl_label = "Move"
 
-    direction = EnumProperty(items=(
+    direction: EnumProperty(items=(
         ('UP', "Up", "Move up"),
         ('DOWN', "Down", "Move down"))
                             )
@@ -122,21 +122,21 @@ class action_group(PropertyGroup):
 
 
 class action_groups_collection(PropertyGroup):
-    groups = CollectionProperty(type=action_group)
-    index = IntProperty()
+    groups: CollectionProperty(type=action_group)
+    index: IntProperty()
 
 
 # =========================== Action pair definitions =========================
 
 class action_pair(PropertyGroup):
     """The data structure for the action entries"""
-    source = StringProperty()
-    target = StringProperty()
+    source: StringProperty()
+    target: StringProperty()
 
 
 class action_pair_collection(PropertyGroup):
-    coll = CollectionProperty(type=action_pair)
-    index = IntProperty()
+    coll: CollectionProperty(type=action_pair)
+    index: IntProperty()
 
 
 class SCENE_OT_cm_action_pair_populate(Operator):
@@ -169,7 +169,7 @@ class SCENE_OT_action_pair_move(Operator):
     bl_idname = "scene.cm_action_pair_move"
     bl_label = "Move"
 
-    direction = EnumProperty(items=(
+    direction: EnumProperty(items=(
         ('UP', "Up", "Move up"),
         ('DOWN', "Down", "Move down"))
                             )
@@ -205,8 +205,8 @@ class SCENE_PT_action(Panel):
     bl_label = "Actions"
     bl_idname = "SCENE_PT_action"
     bl_space_type = 'NODE_EDITOR'
-    bl_region_type = 'TOOLS'
-    bl_category = "CrowdMaster"
+    bl_region_type = 'UI'
+    bl_category = "Simulation"
 
     @classmethod
     def poll(self, context):
@@ -219,10 +219,10 @@ class SCENE_PT_action(Panel):
         layout = self.layout
 
         row = layout.row()
-        row.label("Name")
-        row.label("Armature Action")
-        row.label("Motion Action")
-        row.label("Groups")
+        row.label(text="Name")
+        row.label(text="Armature Action")
+        row.label(text="Motion Action")
+        row.label(text="Groups")
 
         row = layout.row()
 
@@ -232,23 +232,23 @@ class SCENE_PT_action(Panel):
                           "coll", sce.cm_actions, "index")
 
         col = row.column()
-        sub = col.column(True)
+        sub = col.column(align=True)
         blid_ap = SCENE_OT_cm_actions_populate.bl_idname
-        sub.operator(blid_ap, text="", icon="ZOOMIN")
+        sub.operator(blid_ap, text="", icon="ADD")
         blid_ar = SCENE_OT_action_remove.bl_idname
-        sub.operator(blid_ar, text="", icon="ZOOMOUT")
+        sub.operator(blid_ar, text="", icon="REMOVE")
 
-        sub = col.column(True)
+        sub = col.column(align=True)
         sub.separator()
         blid_am = SCENE_OT_agent_move.bl_idname
         sub.operator(blid_am, text="", icon="TRIA_UP").direction = 'UP'
         sub.operator(blid_am, text="", icon="TRIA_DOWN").direction = 'DOWN'
 
-        layout.label("Action pairings:")
+        layout.label(text="Action pairings:")
         row = layout.row()
 
-        row.label("Source")
-        row.label("Target")
+        row.label(text="Source")
+        row.label(text="Target")
 
         row = layout.row()
 
@@ -256,13 +256,13 @@ class SCENE_PT_action(Panel):
                           "coll", sce.cm_action_pairs, "index")
 
         col = row.column()
-        sub = col.column(True)
+        sub = col.column(align=True)
         blid_app = SCENE_OT_cm_action_pair_populate.bl_idname
-        sub.operator(blid_app, text="", icon="ZOOMIN")
+        sub.operator(blid_app, text="", icon="ADD")
         blid_apr = SCENE_OT_action_pair_remove.bl_idname
-        sub.operator(blid_apr, text="", icon="ZOOMOUT")
+        sub.operator(blid_apr, text="", icon="REMOVE")
 
-        sub = col.column(True)
+        sub = col.column(align=True)
         sub.separator()
         blid_apm = SCENE_OT_action_pair_move.bl_idname
         sub.operator(blid_apm, text="", icon="TRIA_UP").direction = 'UP'

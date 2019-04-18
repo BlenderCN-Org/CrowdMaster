@@ -34,8 +34,8 @@ class SCENE_OT_agent_nodes_generate(Operator):
     bl_label = "Generate Agents"
     bl_options = {'REGISTER', 'UNDO'}
 
-    nodeName = StringProperty(name="node name")
-    nodeTreeName = StringProperty(name="node tree")
+    nodeName: StringProperty(name="node name")
+    nodeTreeName: StringProperty(name="node tree")
 
     def getInput(self, inp):
         fr = inp.links[0].from_node
@@ -79,7 +79,7 @@ class SCENE_OT_agent_nodes_generate(Operator):
             return False, None
 
     def execute(self, context):
-        preferences = context.user_preferences.addons[__package__.split(".", 1)[0]].preferences
+        preferences = context.preferences.addons[__package__.split(".", 1)[0]].preferences
         if preferences.show_debug_options and preferences.show_debug_timings:
             cm_timings.resetTimings()
 

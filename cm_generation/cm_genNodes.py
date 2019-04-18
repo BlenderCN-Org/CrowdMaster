@@ -47,7 +47,7 @@ class GeoSocket(NodeSocket):
     bl_label = 'Geo Node Socket'
 
     def draw(self, context, layout, node, text):
-        layout.label(text)
+        layout.label(text=text)
 
     def draw_color(self, context, node):
         return (0.125, 0.125, 0.575, 1.0)
@@ -59,7 +59,7 @@ class TemplateSocket(NodeSocket):
     bl_label = 'Template Node Socket'
 
     def draw(self, context, layout, node, text):
-        layout.label(text)
+        layout.label(text=text)
 
     def draw_color(self, context, node):
         return (0.125, 0.575, 0.125, 1.0)
@@ -82,7 +82,7 @@ class GenerateNode(CrowdMasterAGenTreeNode):
         self.inputs[0].link_limit = 4095
 
     def draw_buttons(self, context, layout):
-        preferences = context.user_preferences.addons[__package__.split(".", 1)[0]].preferences
+        preferences = context.preferences.addons[__package__.split(".", 1)[0]].preferences
         layout.scale_y = 1.5
         if preferences.use_custom_icons:
             oper = layout.operator("scene.cm_agent_nodes_generate",
@@ -109,7 +109,7 @@ class AddToGroupNode(CrowdMasterAGenTreeNode):
         self.outputs.new("TemplateSocketType", "Template")
 
     def draw_buttons(self, context, layout):
-        layout.label("Group name:")
+        layout.label(text="Group name:")
         layout.prop(self, "groupName", text="cm_")
 
     def getSettings(self):
@@ -326,7 +326,7 @@ class ParentNode(CrowdMasterAGenTreeNode):
         if self.parentMode == "bone":
             layout.prop(self, "parentTo")
         else:
-            layout.label("Bind To:")
+            layout.label(text="Bind To:")
             row = layout.row(align=True)
             row.prop(self, "bindToVGroups")
             row.prop(self, "bindToBEnvelopes")
@@ -344,7 +344,7 @@ class material_entry(PropertyGroup):
                            description="Weight for weighted probability when randomly selecting material")
 
 
-class material_UIList(UIList):
+class SCENE_UL_material_UIList(UIList):
     """for drawing each row"""
 
     def draw_item(self, context, layout, data, item, icon, active_data,
@@ -404,13 +404,13 @@ class RandomMaterialNode(CrowdMasterAGenTreeNode):
         row = layout.row()
         row.template_list("material_UIList", "", self, "materialList", self,
                           "materialIndex")
-        sub = row.column().column(True)
+        sub = row.column().column(align=True)
         oper = sub.operator("scene.cm_materialsnode_add", text="",
-                            icon="ZOOMIN")
+                            icon="ADD")
         oper.nodeName = self.name
         oper.nodeTreeName = self.id_data.name
         oper = sub.operator("scene.cm_materialsnode_remove", text="",
-                            icon="ZOOMOUT")
+                            icon="REMOVE")
         oper.nodeName = self.name
         oper.nodeTreeName = self.id_data.name
 
@@ -1210,7 +1210,7 @@ def register():
     bpy.utils.register_class(TemplateSwitchNode)
     bpy.utils.register_class(ParentNode)
     bpy.utils.register_class(material_entry)
-    bpy.utils.register_class(material_UIList)
+    bpy.utils.register_class(SCENE_UL_material_UIList)
     bpy.utils.register_class(SCENE_OT_cm_materialsNode_add)
     bpy.utils.register_class(SCENE_OT_cm_materialsNode_remove)
     bpy.utils.register_class(RandomMaterialNode)
@@ -1255,7 +1255,7 @@ def unregister():
     bpy.utils.unregister_class(TemplateSwitchNode)
     bpy.utils.unregister_class(ParentNode)
     bpy.utils.unregister_class(material_entry)
-    bpy.utils.unregister_class(material_UIList)
+    bpy.utils.unregister_class(SCENE_UL_material_UIList)
     bpy.utils.unregister_class(SCENE_OT_cm_materialsNode_add)
     bpy.utils.unregister_class(SCENE_OT_cm_materialsNode_remove)
     bpy.utils.unregister_class(RandomMaterialNode)

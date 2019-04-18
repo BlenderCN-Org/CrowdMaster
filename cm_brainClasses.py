@@ -47,7 +47,7 @@ class Neuron:
 
     def evaluate(self):
         """Called by any neurons that take this neuron as an input"""
-        preferences = bpy.context.user_preferences.addons[__package__].preferences
+        preferences = bpy.context.preferences.addons[__package__].preferences
         if preferences.show_debug_options:
             t = time.time()
         if self.result:
@@ -307,7 +307,7 @@ class Brain:
 
     def execute(self):
         """Called for each time the agents needs to evaluate"""
-        preferences = bpy.context.user_preferences.addons[__package__].preferences
+        preferences = bpy.context.preferences.addons[__package__].preferences
 
         actv = bpy.context.active_object
         self.isActiveSelection = actv is not None and actv.name == self.userid
@@ -355,7 +355,7 @@ class Brain:
     def hightLight(self, frame):
         """This will be called for the agent that is the active selection"""
         for n in self.neurons.values():
-            preferences = bpy.context.user_preferences.addons[__package__].preferences
+            preferences = bpy.context.preferences.addons[__package__].preferences
             if preferences.use_node_color:
                 if n.nodeKey[0] is None:
                     n.highLight(frame)

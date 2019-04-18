@@ -22,7 +22,7 @@ import bpy
 from .cm_brainClasses import Brain
 from .cm_nodeFunctions import logictypes, statetypes
 
-preferences = bpy.context.user_preferences.addons[__package__].preferences
+preferences = bpy.context.preferences.addons[__package__].preferences
 
 
 def getInputs(inp, nodeKey):

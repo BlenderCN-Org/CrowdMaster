@@ -467,7 +467,7 @@ class draw_path_directions_operator(Operator):
     bl_idname = "view3d.draw_path_operator"
     bl_label = "Draw Directions"
 
-    pathName = StringProperty(name="Name Of Path")
+    pathName: StringProperty(name="Name Of Path")
 
     def drawCallback(self, context, path):
         with cm_draw.bglWrapper:
@@ -527,19 +527,19 @@ class draw_path_directions_operator(Operator):
 class path_entry(PropertyGroup):
     """For storing a single path"""
     # name - aliase given to the path
-    objectName = StringProperty(name="Object Name")
-    radius = FloatProperty(name="Radius", min=0)
-    mode = EnumProperty(name="Mode",
+    objectName: StringProperty(name="Object Name")
+    radius: FloatProperty(name="Radius", min=0)
+    mode: EnumProperty(name="Mode",
                         items=[("bidirectional", "Bidirectional", "", 1),
                                ("road", "Road", "", 2),
                                ("directional", "Directional", "", 3)])
-    laneSeparation = FloatProperty(name="Lane Separation")
-    revDirec = CollectionProperty(name="Directions", type=PropertyGroup)
+    laneSeparation: FloatProperty(name="Lane Separation")
+    revDirec: CollectionProperty(name="Directions", type=PropertyGroup)
 
 
 class paths_collection(PropertyGroup):
-    coll = CollectionProperty(type=path_entry)
-    index = IntProperty()
+    coll: CollectionProperty(type=path_entry)
+    index: IntProperty()
 
 
 class SCENE_OT_cm_path_populate(Operator):
@@ -590,8 +590,8 @@ class SCENE_PT_path(Panel):
     bl_label = "Paths"
     bl_idname = "SCENE_PT_path"
     bl_space_type = 'NODE_EDITOR'
-    bl_region_type = 'TOOLS'
-    bl_category = "CrowdMaster"
+    bl_region_type = 'UI'
+    bl_category = "Simulation"
     bl_options = {'DEFAULT_CLOSED'}
 
     @classmethod
@@ -619,11 +619,11 @@ class SCENE_PT_path(Panel):
                           "coll", sce.cm_paths, "index")
 
         col = row.column()
-        sub = col.column(True)
+        sub = col.column(align=True)
         blid_ap = SCENE_OT_cm_path_populate.bl_idname
-        sub.operator(blid_ap, text="", icon="ZOOMIN")
+        sub.operator(blid_ap, text="", icon="ADD")
         blid_ar = SCENE_OT_cm_path_remove.bl_idname
-        sub.operator(blid_ar, text="", icon="ZOOMOUT")
+        sub.operator(blid_ar, text="", icon="REMOVE")
 
 # ==========================================================================
 #                       Path editing operators
